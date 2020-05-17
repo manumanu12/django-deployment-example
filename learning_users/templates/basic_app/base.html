@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title> <!--Don t give it a title as we don t want to inherit the title to the other html files-->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+
+</head>
+<body>
+
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="navbar-nav">
+            <a class="navbar-brand" href="{% url 'index' %}">Home</a>
+            <a class="nav-item nav-link active" href="{% url 'admin:index' %}">Admin</a>
+            <a class="nav-item nav-link" href="{% url 'basic_app:register' %}">Register</a>
+
+            {% if user.is_authenticated %} <!-- We created variable userr and checked with imported function authenticated in the login function in views.py-->
+                <a class="nav-item nav-link" href="{% url 'logout' %}">Logout</a> <!-- a link to the NON-relational url (we don t use: basic_app:logout, as we hardcoded this url in the project folder url!!! it ios not a relational in the app url!) with the name: logout -> belongs to the function user_logout and redirects the user back to the index page-->
+                <!--It makes sense to hardcode the logout as I want the user to send back to the landing page without other urls, so I add it to project folder url, nott app folder url-->
+                {% else %} 
+                <a class="nav-item nav-link" href="{% url 'basic_app:user_login' %}">Login</a> <!--this link is relational, means it belongs to the basic_app url-->
+            {% endif %}
+
+        </div>
+    </nav>
+
+    <div class="container"> <!--Add a container so that other pages start directly wrapped in a container-->
+    {% block body_block %}
+    {% endblock %}
+
+    </div>
+</body>
+</html>
